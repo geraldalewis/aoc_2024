@@ -57,6 +57,28 @@ func part1() {
 	fmt.Printf("part one: %+v\n", answer)
 }
 
+func part2() {
+	colA, colB := readInput()
+	sort.Ints(colA)
+	sort.Ints(colB)
+	var total = 0
+	for _, numA := range colA {
+		var count = 0
+		for _, numB := range colB {
+			if numB < numA {
+				continue
+			}
+			if numB > numA {
+				break
+			}
+			count += 1
+		}
+		total += numA * count
+	}
+	fmt.Printf("part two: %+v\n", total)
+}
+
 func main() {
 	part1()
+	part2()
 }
