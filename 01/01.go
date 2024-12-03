@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-func main() {
+func readInput() ([]int, []int) {
 	data, err := os.ReadFile("01.data")
 	if err != nil {
 		panic("Could not read file")
@@ -30,11 +30,13 @@ func main() {
 			}
 		}
 	}
+	return colA, colB
+}
+
+func sumDiffs(colA []int, colB []int) int {
 	if len(colA) != len(colB) {
 		panic("Lists of ints aren't the same length")
 	}
-	sort.Ints(colA)
-	sort.Ints(colB)
 	total := 0
 	for i, num := range colA {
 		a, b := num, colB[i]
@@ -44,5 +46,17 @@ func main() {
 			total += b - a
 		}
 	}
-	fmt.Printf("%+v\n", total)
+	return total
+}
+
+func part1() {
+	colA, colB := readInput()
+	sort.Ints(colA)
+	sort.Ints(colB)
+	answer := sumDiffs(colA, colB)
+	fmt.Printf("part one: %+v\n", answer)
+}
+
+func main() {
+	part1()
 }
