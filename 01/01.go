@@ -62,21 +62,32 @@ func part2() {
 	sort.Ints(colA)
 	sort.Ints(colB)
 	total := 0
+	indexA := 0
 	indexB := 0
+	lenA := len(colA)
+	lenB := len(colB)
 	numB := colB[indexB]
-	for _, numA := range colA {
-		for numB < numA && indexB+1 < len(colB) {
+	for indexA+1 < lenA {
+		numA := colA[indexA]
+		for numB < numA && indexB+1 < lenB {
 			indexB++
 			numB = colB[indexB]
 		}
 		if numA != numB {
+			indexA++
 			continue
 		}
 		count := 1
-		for indexB+count < len(colB) && colB[indexB+count] == numB {
+		for indexB+count < lenB && colB[indexB+count] == numB {
 			count++
 		}
-		total += numA * count
+		subtotal := numA * count
+		total += subtotal
+		for indexA+1 < lenA && colA[indexA+1] == numA {
+			indexA++
+			total += subtotal
+		}
+		indexA++
 	}
 	fmt.Printf("part two: %+v\n", total)
 }
