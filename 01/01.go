@@ -49,16 +49,14 @@ func sumDiffs(colA []int, colB []int) int {
 	return total
 }
 
-func part1() {
-	colA, colB := readInput()
+func part1(colA []int, colB []int) int {
 	sort.Ints(colA)
 	sort.Ints(colB)
 	answer := sumDiffs(colA, colB)
 	fmt.Printf("part one: %+v\n", answer)
 }
 
-func part2() {
-	colA, colB := readInput()
+func part2(colA []int, colB []int) int {
 	sort.Ints(colA)
 	sort.Ints(colB)
 	total := 0
@@ -93,6 +91,7 @@ func part2() {
 }
 
 func main() {
-	part1()
-	part2()
+	colA, colB := readInput()
+	part1(colA, colB)
+	part2(colA, colB)
 }
