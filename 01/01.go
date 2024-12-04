@@ -61,17 +61,20 @@ func part2() {
 	colA, colB := readInput()
 	sort.Ints(colA)
 	sort.Ints(colB)
-	var total = 0
+	total := 0
+	indexB := 0
+	numB := colB[indexB]
 	for _, numA := range colA {
-		var count = 0
-		for _, numB := range colB {
-			if numB < numA {
-				continue
-			}
-			if numB > numA {
-				break
-			}
-			count += 1
+		for numB < numA && indexB+1 < len(colB) {
+			indexB++
+			numB = colB[indexB]
+		}
+		if numA != numB {
+			continue
+		}
+		count := 1
+		for indexB+count < len(colB) && colB[indexB+count] == numB {
+			count++
 		}
 		total += numA * count
 	}
