@@ -1,0 +1,4 @@
+Mul(X, Y) = Y -> 0 ? 0 : X + Mul(X, Y - 1)
+mul_op = "mul(" & int -> X & "," & int -> Y & ")" $ Mul(X, Y)
+Sum(Arr) = Arr -> [A, ...B] ? A + Sum(B) : (Arr -> [C] ? C : 0)
+find_all(mul_op) -> A $ Sum(A)
