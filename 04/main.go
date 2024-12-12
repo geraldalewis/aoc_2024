@@ -73,6 +73,28 @@ func Part1(wordSearch string) int {
 	return count
 }
 
+func Part2(wordSearch string) int {
+	board, stride := createPaddedBoard(wordSearch, 1)
+	count := 0
+	for i, k := range board {
+		if k != 'A' {
+			continue
+		}
+		nw := board[(i-stride)-1]
+		ne := board[(i-stride)+1]
+		sw := board[(i+stride)-1]
+		se := board[(i+stride)+1]
+		leftMS := nw == 'M' && se == 'S'
+		leftSM := nw == 'S' && se == 'M'
+		rightMS := ne == 'M' && sw == 'S'
+		rightSM := ne == 'S' && sw == 'M'
+		if (leftMS || leftSM) && (rightMS || rightSM) {
+			count++
+		}
+	}
+	return count
+}
+
 func readInputFile() string {
 	data, err := os.ReadFile("input")
 	if err != nil {
@@ -84,4 +106,5 @@ func readInputFile() string {
 func main() {
 	wordSearch := readInputFile()
 	fmt.Printf("Part1 count: %d\n", Part1(wordSearch))
+	fmt.Printf("Part2 count: %d\n", Part2(wordSearch))
 }
