@@ -1,0 +1,7 @@
+Mul(X, Y) = Y -> 0 ? 0 : X + Mul(X, Y - 1)
+mul_op = "mul(" & int -> X & "," & int -> Y & ")" $ Mul(X, Y)
+Sum(Arr) = Arr -> [A, ...B] ? A + Sum(B) : (Arr -> [C] ? C : 0)
+all_before_dont = find_all_before(mul_op, "don't()" | end)
+until_do = all_before_dont < (find("do()") | end)
+SumArrays(Arr) = Arr -> [A, ...B] ? Sum(A) + SumArrays(B) : (Arr -> [C] ? Sum(C) : 0)
+find_all(until_do) -> A $ SumArrays(A)
