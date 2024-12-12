@@ -6,18 +6,13 @@ import (
 	"strings"
 )
 
-func Part1(wordSearch string) int {
+func createPaddedBoard(wordSearch string, padding int) (string, int) {
 	lines := strings.Split(strings.TrimSpace(wordSearch), "\n")
-	// We'll create a buffer surrounding the word search board filled with 0s,
-	// that way we can safely index into other locations without having to do
-	// bounds checks. The size of the 0s buffer needs to account for the "MAS"
-	// in "XMAS".
-	masLength := len("MAS")
 	// The length of each row, including the 0 buffers on the left and right:
-	stride := masLength + len(lines[0]) + masLength // 000XMASXMAS000
-	hpadding := strings.Repeat("0", masLength)
+	stride := padding + len(lines[0]) + padding // 000XMASXMAS000
+	hpadding := strings.Repeat("0", padding)
 	// The three rows of 0s above the word search board
-	vpadding := strings.Repeat("0", stride*masLength)
+	vpadding := strings.Repeat("0", stride*padding)
 	// The padded board will look something like this:
 	// 0000000000
 	// 0000000000
@@ -29,7 +24,16 @@ func Part1(wordSearch string) int {
 	// 0000000000
 	// 0000000000
 	board := vpadding + hpadding + strings.Join(lines, hpadding+hpadding) + hpadding + vpadding
+	return board, stride
+}
 
+func Part1(wordSearch string) int {
+	// We'll create a buffer surrounding the word search board filled with 0s,
+	// that way we can safely index into other locations without having to do
+	// bounds checks. The size of the 0s buffer needs to account for the "MAS"
+	// in "XMAS".
+	masLength := len("MAS")
+	board, stride := createPaddedBoard(wordSearch, masLength)
 	count := 0
 	for i, k := range board {
 		if k != 'X' {
